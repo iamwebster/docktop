@@ -7,7 +7,6 @@ from fastapi import HTTPException, status
 def serialize_container(container: Container) -> dict:
     return {
         "id": container.id,
-        "image": container.image.tags if container.image.tags else container.image.short_id,
         "status": container.status,
         "ports": container.ports,
         "name": container.name,
