@@ -10,11 +10,11 @@ def serialize_volume(volume: Volume) -> dict:
         "short_id": volume.short_id
     }
 
-def get_volumes():
+def get_volumes() -> list[dict]:
     return [serialize_volume(volume) for volume in docker_client.volumes.list()]
 
 
-def get_volume(volume_id: str):
+def get_volume(volume_id: str) -> dict:
     try:
         volume = docker_client.volumes.get(volume_id)
     except NotFound:
