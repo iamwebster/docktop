@@ -1,7 +1,7 @@
 from src.integrations.docker_client import docker_client
 from docker.models.containers import Container
 from docker.errors import NotFound
-from fastapi import HTTPException, status
+from src.utils.exceptions import not_found_error
 
 
 def serialize_container(container: Container) -> dict:
@@ -14,14 +14,13 @@ def serialize_container(container: Container) -> dict:
 
 
 def get_containers(all: bool = False) -> list[dict]:
-    containers: list[Container] = docker_client.containers.list(all=all)
-    return [serialize_container(container) for container in containers]
+    return [serialize_container(container) for container in docker_client.containers.list(all=all)]
 
 
 def get_container(container_id: str) -> dict:
     try:
         container = docker_client.containers.get(container_id)
-    except NotFound as e:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="container not found")
+    except NotFound:
+        raise not_found_error("container")
     
     return serialize_container(container)

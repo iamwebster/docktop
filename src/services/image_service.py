@@ -1,7 +1,7 @@
 from src.integrations.docker_client import docker_client
 from docker.models.images import Image 
-from fastapi import HTTPException, status
 from docker.errors import ImageNotFound
+from src.utils.exceptions import not_found_error
 
 
 def serialize_image(image: Image) -> dict:
@@ -13,13 +13,12 @@ def serialize_image(image: Image) -> dict:
     }
 
 def get_images() -> list[dict]:
-    images = docker_client.images.list()
-    return [serialize_image(image) for image in images]
+    return [serialize_image(image) for image in docker_client.images.list()]
 
 def get_image(image_id: str) -> dict:
     try:
         image = docker_client.images.get(image_id)
     except ImageNotFound:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="image not found")
+        raise not_found_error("image")
     
     return serialize_image(image)

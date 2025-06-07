@@ -9,6 +9,7 @@ router = APIRouter(prefix="/images", tags=["Images"])
 def get_images_endpoint():
     return get_images()
 
+
 @router.get("/{image_id}")
 def get_image_endpoint(image_id: str):
     return get_image(image_id)
