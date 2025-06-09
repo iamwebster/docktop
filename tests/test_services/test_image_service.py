@@ -1,5 +1,5 @@
-import pytest 
-from unittest.mock import MagicMock, patch 
+import pytest
+from unittest.mock import MagicMock, patch
 from fastapi import HTTPException
 from docker.errors import ImageNotFound
 
@@ -22,6 +22,7 @@ def test_get_image_success(mock_docker_client):
     result["labels"] = {}
     result["short_id"] = "1"
     result["tags"] = []
+
 
 @patch("src.services.image_service.docker_client")
 def test_get_image_not_found(mock_docker_client):
@@ -60,7 +61,7 @@ def test_serialize_image():
     fake_image.tags = []
 
     result = serialize_image(fake_image)
-    
+
     result["id"] = "123"
     result["labels"] = {}
     result["short_id"] = "1"

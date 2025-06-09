@@ -1,5 +1,5 @@
-import pytest 
-from unittest.mock import MagicMock, patch 
+import pytest
+from unittest.mock import MagicMock, patch
 from src.services.network_service import get_network, get_networks, serialize_networks
 from fastapi import HTTPException
 from docker.errors import NotFound
@@ -40,6 +40,7 @@ def test_get_network_success(mock_docker_client):
     assert result["containers"] == []
     assert result["short_id"] == "1"
 
+
 @patch("src.services.network_service.docker_client")
 def test_get_network_error(mock_docker_client):
     mock_docker_client.networks.get.side_effect = NotFound("not found")
@@ -47,7 +48,7 @@ def test_get_network_error(mock_docker_client):
     with pytest.raises(HTTPException) as exc:
         get_network("1")
 
-    assert exc.value.status_code == 404 
+    assert exc.value.status_code == 404
     assert exc.value.detail == "network not found"
 
 

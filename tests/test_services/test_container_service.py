@@ -1,9 +1,13 @@
-import pytest 
+import pytest
 from unittest.mock import patch, MagicMock
 from docker.errors import NotFound
 from fastapi import HTTPException
 
-from src.services.container_service import get_container, get_containers, serialize_container
+from src.services.container_service import (
+    get_container,
+    get_containers,
+    serialize_container,
+)
 
 
 @patch("src.services.container_service.docker_client")
@@ -39,7 +43,6 @@ def test_serialize_container():
     fake_container.status = "ok"
     fake_container.ports = {}
     fake_container.name = "Oleg"
-
 
     result = serialize_container(fake_container)
 

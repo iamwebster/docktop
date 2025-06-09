@@ -1,4 +1,4 @@
-from fastapi import APIRouter 
+from fastapi import APIRouter
 from src.services.volume_service import get_volume, get_volumes
 
 
@@ -13,4 +13,3 @@ def get_volumes_endpoint():
 @router.get("/{volume_id}")
 def get_volume_endpoint(volume_id: str):
     return get_volume(volume_id)
-

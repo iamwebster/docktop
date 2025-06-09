@@ -14,5 +14,3 @@ def get_networks_endpoint():
 @router.get("/{network_id}")
 def get_network_endpoint(network_id: str):
     return get_network(network_id)
-
-    

@@ -1,4 +1,4 @@
-from fastapi import APIRouter 
+from fastapi import APIRouter
 from src.services.image_service import get_images, get_image
 
 

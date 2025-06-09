@@ -14,7 +14,10 @@ def serialize_container(container: Container) -> dict:
 
 
 def get_containers(all: bool = False) -> list[dict]:
-    return [serialize_container(container) for container in docker_client.containers.list(all=all)]
+    return [
+        serialize_container(container)
+        for container in docker_client.containers.list(all=all)
+    ]
 
 
 def get_container(container_id: str) -> dict:
@@ -22,5 +25,5 @@ def get_container(container_id: str) -> dict:
         container = docker_client.containers.get(container_id)
     except NotFound:
         raise not_found_error("container")
-    
+
     return serialize_container(container)

@@ -1,8 +1,9 @@
 from src.services.volume_service import get_volume, get_volumes, serialize_volume
-from unittest.mock import MagicMock, patch 
-import pytest 
+from unittest.mock import MagicMock, patch
+import pytest
 from docker.errors import NotFound
 from fastapi import HTTPException
+
 
 @patch("src.services.volume_service.docker_client")
 def test_get_volume_success(mock_docker_client):
@@ -18,13 +19,14 @@ def test_get_volume_success(mock_docker_client):
     assert result["name"] == "Oleg"
     assert result["short_id"] == "1"
 
+
 @patch("src.services.volume_service.docker_client")
 def test_get_volumes_success(mock_docker_client):
     fake_volume = MagicMock()
     fake_volume.id = "123"
     fake_volume.name = "Anton"
     fake_volume.short_id = "12"
-    
+
     mock_docker_client.volumes.list.return_value = [fake_volume]
     result = get_volumes()
 
@@ -56,4 +58,3 @@ def test_serialize_volume():
     assert result["id"] == "123"
     assert result["name"] == "Denis"
     assert result["short_id"] == "12"
-    
